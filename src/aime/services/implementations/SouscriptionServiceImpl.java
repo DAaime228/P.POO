@@ -13,6 +13,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author DELL
@@ -21,7 +23,12 @@ public class SmsServiceImpl implements SmsService {
 
     @Override
     public void ajouterSms(Sms sms) {
-        Connection conn = Connexion.getConnection();
+        Connection conn = null;
+        try {
+            conn = Connexion.getConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(SmsServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
         PreparedStatement ps = null;
 
         try {
@@ -41,7 +48,12 @@ public class SmsServiceImpl implements SmsService {
 
     @Override
     public Sms trouverSmsParId(int id) {
-        Connection conn = Connexion.getConnection();
+        Connection conn;
+        try {
+            conn = Connexion.getConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(SmsServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
         PreparedStatement ps = null;
         ResultSet rs = null;
         Sms sms = null;
